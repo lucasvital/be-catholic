@@ -1,0 +1,858 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BE CATHOLIC — Site Structure</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap');
+
+  :root {
+    --gold: #C9A84C;
+    --white: #F5F0E8;
+    --dark: #0A0A0A;
+    --card: #111;
+    --mid: #181818;
+    --silver: #A8A8B0;
+    --blue: #0D1A2E;
+    --green: #2D6A4F;
+    --red: #7A1E1E;
+    --purple: #3B2460;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { background: var(--dark); color: var(--white); font-family: 'Inter', sans-serif; }
+
+  /* HEADER */
+  .page-header {
+    text-align: center;
+    padding: 64px 40px 48px;
+    border-bottom: 1px solid #C9A84C18;
+    background: radial-gradient(ellipse at center, #1a1408 0%, #0A0A0A 70%);
+  }
+  .page-header .eyebrow { font-size: 10px; letter-spacing: 6px; color: var(--gold); margin-bottom: 16px; text-transform: uppercase; }
+  .page-header h1 { font-family: 'Cinzel', serif; font-size: clamp(28px, 5vw, 48px); font-weight: 700; margin-bottom: 8px; }
+  .page-header p { font-size: 13px; color: #555; letter-spacing: 2px; }
+
+  /* LEGEND */
+  .legend {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    padding: 28px 40px;
+    border-bottom: 1px solid #C9A84C12;
+    justify-content: center;
+  }
+  .legend-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 11px;
+    letter-spacing: 1px;
+    color: #666;
+  }
+  .legend-dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
+
+  /* TIMELINE */
+  .timeline {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 48px 40px 80px;
+    position: relative;
+  }
+  .timeline::before {
+    content: '';
+    position: absolute;
+    left: 72px;
+    top: 48px;
+    bottom: 80px;
+    width: 1px;
+    background: linear-gradient(to bottom, transparent, #C9A84C30 10%, #C9A84C30 90%, transparent);
+  }
+
+  /* SECTION CARD */
+  .section-card {
+    display: grid;
+    grid-template-columns: 80px 1fr;
+    gap: 0 24px;
+    margin-bottom: 40px;
+    position: relative;
+  }
+
+  .section-number-col {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-top: 4px;
+  }
+
+  .section-dot {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    border: 2px solid;
+    background: var(--dark);
+    z-index: 1;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 9px;
+    font-weight: 600;
+    color: var(--dark);
+  }
+
+  .section-num-label {
+    font-family: 'Cinzel', serif;
+    font-size: 10px;
+    color: #333;
+    margin-top: 8px;
+    letter-spacing: 1px;
+  }
+
+  .section-body {
+    background: var(--card);
+    border: 1px solid #C9A84C15;
+    border-radius: 6px;
+    overflow: hidden;
+    margin-bottom: 0;
+  }
+
+  .section-top {
+    padding: 24px 28px 20px;
+    border-bottom: 1px solid #C9A84C10;
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+
+  .section-title-block h2 {
+    font-family: 'Cinzel', serif;
+    font-size: 18px;
+    font-weight: 700;
+    margin-bottom: 4px;
+  }
+
+  .section-title-block .section-subtitle {
+    font-size: 12px;
+    color: #555;
+    letter-spacing: 1px;
+  }
+
+  .section-tags {
+    display: flex;
+    gap: 6px;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+  }
+
+  .tag {
+    font-size: 9px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    padding: 3px 10px;
+    border-radius: 20px;
+    border: 1px solid;
+    white-space: nowrap;
+  }
+
+  .tag-gsap   { color: #A8D8A8; border-color: #2D6A4F50; background: #2D6A4F15; }
+  .tag-video  { color: #A8C8E8; border-color: #1A3A5C50; background: #1A3A5C15; }
+  .tag-image  { color: #E8D08A; border-color: #C9A84C40; background: #C9A84C10; }
+  .tag-css    { color: #D8A8D8; border-color: #5A2A5A50; background: #5A2A5A15; }
+  .tag-form   { color: #E8A8A8; border-color: #7A1E1E50; background: #7A1E1E15; }
+
+  /* SECTION GRID */
+  .section-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 0;
+  }
+
+  .section-col {
+    padding: 20px 24px;
+    border-right: 1px solid #C9A84C10;
+  }
+  .section-col:last-child { border-right: none; }
+
+  .col-label {
+    font-size: 9px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: #444;
+    margin-bottom: 12px;
+  }
+
+  .col-label .col-icon { margin-right: 6px; }
+
+  .col-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+    margin-bottom: 10px;
+  }
+
+  .col-item .bullet {
+    color: var(--gold);
+    font-size: 12px;
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+
+  .col-item p {
+    font-size: 13px;
+    color: #AAA;
+    line-height: 1.5;
+    max-width: 100%;
+  }
+
+  .col-item p strong {
+    color: var(--white);
+    font-weight: 500;
+  }
+
+  .col-item p em {
+    color: var(--gold);
+    font-style: normal;
+  }
+
+  .code-tag {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    background: #1A1A1A;
+    color: #7EC8E3;
+    padding: 1px 6px;
+    border-radius: 3px;
+    display: inline;
+  }
+
+  /* VISUAL MOCKUP BAR */
+  .mockup-bar {
+    height: 6px;
+    width: 100%;
+  }
+
+  /* FLOW ARROWS */
+  .flow-note {
+    text-align: center;
+    padding: 8px;
+    font-size: 11px;
+    color: #333;
+    letter-spacing: 2px;
+  }
+
+  /* SUMMARY TABLE */
+  .summary-section {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 0 40px 80px;
+  }
+
+  .summary-section h2 {
+    font-family: 'Cinzel', serif;
+    font-size: 20px;
+    margin-bottom: 24px;
+    color: var(--white);
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+  }
+
+  thead tr {
+    background: #181818;
+    border-bottom: 1px solid #C9A84C20;
+  }
+
+  thead th {
+    padding: 12px 16px;
+    text-align: left;
+    font-size: 9px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--gold);
+    font-weight: 500;
+  }
+
+  tbody tr {
+    border-bottom: 1px solid #1A1A1A;
+  }
+
+  tbody tr:hover { background: #111; }
+
+  tbody td {
+    padding: 14px 16px;
+    color: #888;
+    vertical-align: top;
+    line-height: 1.5;
+  }
+
+  tbody td:first-child {
+    font-family: 'Cinzel', serif;
+    color: var(--white);
+    font-size: 12px;
+  }
+
+  tbody td .lib {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: #7EC8E3;
+    background: #0E0E0E;
+    padding: 2px 6px;
+    border-radius: 2px;
+    display: inline-block;
+    margin: 2px 2px 2px 0;
+  }
+
+  .priority-high   { color: #E07070; font-size: 10px; letter-spacing: 1px; }
+  .priority-med    { color: var(--gold); font-size: 10px; letter-spacing: 1px; }
+  .priority-low    { color: #555; font-size: 10px; letter-spacing: 1px; }
+
+  /* VIDEO REFS */
+  .video-section {
+    background: #0E0E0E;
+    border-top: 1px solid #C9A84C12;
+    border-bottom: 1px solid #C9A84C12;
+    padding: 48px 40px;
+    margin-bottom: 0;
+  }
+
+  .video-section .inner { max-width: 1000px; margin: 0 auto; }
+
+  .video-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 16px;
+    margin-top: 24px;
+  }
+
+  .video-card {
+    background: var(--card);
+    border: 1px solid #C9A84C18;
+    border-radius: 4px;
+    padding: 20px 20px;
+  }
+
+  .video-card .vc-label {
+    font-size: 9px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: #444;
+    margin-bottom: 8px;
+  }
+
+  .video-card h4 {
+    font-family: 'Cinzel', serif;
+    font-size: 13px;
+    color: var(--white);
+    margin-bottom: 8px;
+    font-weight: 400;
+  }
+
+  .video-card p {
+    font-size: 12px;
+    color: #555;
+    line-height: 1.6;
+  }
+
+  .footer {
+    text-align: center;
+    padding: 48px 40px;
+  }
+
+  .footer p { font-size: 11px; color: #333; letter-spacing: 3px; text-transform: uppercase; }
+
+  @media (max-width: 720px) {
+    .section-grid { grid-template-columns: 1fr; }
+    .section-col { border-right: none; border-bottom: 1px solid #C9A84C10; }
+    .timeline::before { left: 50px; }
+    .timeline { padding: 40px 20px 60px; }
+    .section-card { grid-template-columns: 60px 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<div class="page-header">
+  <div class="eyebrow">Arquitetura · Landing Page</div>
+  <h1>BE CATHOLIC — Site Structure</h1>
+  <p>8 Seções · GSAP ScrollTrigger · Experiência Cinematográfica</p>
+</div>
+
+<div class="legend">
+  <div class="legend-item"><div class="legend-dot" style="background:#2D6A4F"></div> GSAP / ScrollTrigger</div>
+  <div class="legend-item"><div class="legend-dot" style="background:#1A3A5C"></div> Vídeo Background</div>
+  <div class="legend-item"><div class="legend-dot" style="background:#C9A84C"></div> Imagem / KV</div>
+  <div class="legend-item"><div class="legend-dot" style="background:#5A2A5A"></div> CSS Puro / Transition</div>
+  <div class="legend-item"><div class="legend-dot" style="background:#7A1E1E"></div> Formulário / CTA</div>
+</div>
+
+<div class="timeline">
+
+  <!-- ============= SECTION 01 ============= -->
+  <div class="section-card">
+    <div class="section-number-col">
+      <div class="section-dot" style="border-color:#1A3A5C; background:#1A3A5C; color:#A8C8E8;">01</div>
+      <div class="section-num-label">HERO</div>
+    </div>
+    <div class="section-body">
+      <div class="mockup-bar" style="background: linear-gradient(90deg, #0D1A2E, #1A3A5C, #0D1A2E)"></div>
+      <div class="section-top">
+        <div class="section-title-block">
+          <h2>HERO — Entrada Épica</h2>
+          <div class="section-subtitle">100vh · Fullscreen · First impression</div>
+        </div>
+        <div class="section-tags">
+          <span class="tag tag-video">Vídeo BG</span>
+          <span class="tag tag-gsap">GSAP SplitText</span>
+          <span class="tag tag-css">Parallax</span>
+        </div>
+      </div>
+      <div class="section-grid">
+        <div class="section-col">
+          <div class="col-label"><span class="col-icon">📐</span>Conteúdo</div>
+          <div class="col-item"><span class="bullet">✦</span><p><strong>Logo / wordmark</strong> "BE CATHOLIC" centralizado</p></div>
+          <div class="col-item"><span class="bullet">✦</span><p><strong>Subline:</strong> "Não é religião. É identidade."</p></div>
+          <div class="col-item"><span class="bullet">✦</span><p><strong>Scroll indicator</strong> animado embaixo (cruz que pulsa)</p></div>
+          <div class="col-item"><span class="bullet">✦</span><p><strong>Overlay escuro</strong> sobre o vídeo (opacity 0.55)</p></div>
+        </div>
+        <div class="section-col">
+          <div class="col-label"><span class="col-icon">🎬</span>Efeito / Animação</div>
+          <div class="col-item"><span class="bullet">⚡</span><p><span class="code-tag">SplitText</span> letra por letra no título ao carregar — <em>stagger 0.04s</em></p></div>
+          <div class="col-item"><span class="bullet">⚡</span><p>Subline entra com <span class="code-tag">fadeInUp</span> após o título</p></div>
+          <div class="col-item"><span class="bullet">⚡</span><p>No scroll: vídeo faz <em>slow parallax</em> para baixo enquanto o texto sobe e desaparece</p></div>
+        </div>
+        <div class="section-col">
+          <div class="col-label"><span class="col-icon">🎥</span>Mídia Sugerida</div>
+          <div class="col-item"><span class="bullet">▶</span><p><strong>Opção A:</strong> loop de vídeo de <em>catedral gótica com velas</em>, fumaça de incenso, luz dourada</p></div>
+          <div class="col-item"><span class="bullet">▶</span><p><strong>Opção B:</strong> KV07 (cruzado no trono) como imagem estática com efeito ken-burns suave</p></div>
+          <div class="col-item"><span class="bullet">▶</span><p>Fonte de vídeo: <em>Pexels / Pixabay</em> (gratuito) — buscar "cathedral candles loop"</p></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="flow-note">↓ scroll</div>
+
+  <!-- ============= SECTION 02 ============= -->
+  <div class="section-card">
+    <div class="section-number-col">
+      <div class="section-dot" style="border-color:#2D6A4F; background:#2D6A4F; color:#A8D8A8;">02</div>
+      <div class="section-num-label">MANIFESTO</div>
+    </div>
+    <div class="section-body">
+      <div class="mockup-bar" style="background: linear-gradient(90deg, #0A0A0A, #1A1A1A, #0A0A0A)"></div>
+      <div class="section-top">
+        <div class="section-title-block">
+          <h2>MANIFESTO — Texto Épico</h2>
+          <div class="section-subtitle">O coração da campanha · Palavra por palavra</div>
+        </div>
+        <div class="section-tags">
+          <span class="tag tag-gsap">GSAP ScrollTrigger</span>
+          <span class="tag tag-gsap">SplitText</span>
+          <span class="tag tag-css">Partículas</span>
+        </div>
+      </div>
+      <div class="section-grid">
+        <div class="section-col">
+          <div class="col-label"><span class="col-icon">📐</span>Conteúdo</div>
+          <div class="col-item"><span class="bullet">✦</span><p>Texto grande, em blocos de 1 frase por vez:</p></div>
+          <div class="col-item"><span class="bullet">✦</span><p><em>"O mundo te oferece identidades que duram uma temporada."</em></p></div>
+          <div class="col-item"><span class="bullet">✦</span><p><em>"A Igreja existe há 2000 anos."</em></p></div>
+          <div class="col-item"><span class="bullet">✦</span><p><em>"São Miguel venceu batalhas cósmicas."</em></p></div>
+          <div class="col-item"><span class="bullet">✦</span><p><em>"Jesus venceu a morte."</em></p></div>
+          <div class="col-item"><span class="bullet">✦</span><p><strong>Final em destaque:</strong> <em>"Você foi feito para mais."</em></p></div>
+        </div>
+        <div class="section-col">
+          <div class="col-label"><span class="col-icon">🎬</span>Efeito / Animação</div>
+          <div class="col-item"><span class="bullet">⚡</span><p>Cada frase revela palavra por palavra via <span class="code-tag">ScrollTrigger scrub</span> — o scroll controla a velocidade da revelação</p></div>
+          <div class="col-item"><span class="bullet">⚡</span><p>Palavras que já passaram ficam em <em>cinza claro</em>; a ativa fica em <em>branco brilhante</em></p></div>
+          <div class="col-item"><span class="bullet">⚡</span><p>Linha final "Você foi feito para mais." entra em <em>dourado puro</em>, maior</p></div>
+          <div class="col-item"><span class="bullet">⚡</span><p>Fundo: partículas douradas sutilíssimas com <span class="code-tag">particles.js</span> ou puro CSS</p></div>
+        </div>
+        <div class="section-col">
+          <div class="col-label"><span class="col-icon">📏</span>Notas Técnicas</div>
+          <div class="col-item"><span class="bullet">▶</span><p>Seção tem <strong>300–400vh de altura</strong> para dar espaço ao scroll scrub</p></div>
+          <div class="col-item"><span class="bullet">▶</span><p>Texto fica <strong>pinned</strong> (fixo) no centro enquanto o scroll avança</p></div>
+          <div class="col-item"><span class="bullet">▶</span><p>Fonte Cinzel, tamanho <strong>48–80px</strong>, peso 700</p></div>
+          <div class="col-item"><span class="bullet">▶</span><p>Inspiração: site do Stripe, Apple, ou manifesto do Patagonia</p></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="flow-note">↓ scroll</div>
+
+  <!-- ============= SECTION 03 ============= -->
+  <div class="section-card">
+    <div class="section-number-col">
+      <div class="section-dot" style="border-color:#C9A84C; background:#C9A84C; color:#0A0A0A;">03</div>
+      <div class="section-num-label">KVs</div>
+    </div>
+    <div class="section-body">
+      <div class="mockup-bar" style="background: linear-gradient(90deg, #1A1408, #C9A84C40, #1A1408)"></div>
+      <div class="section-top">
+        <div class="section-title-block">
+          <h2>GALERIA DE KVs — Scroll Horizontal</h2>
+          <div class="section-subtitle">Os 7 Key Visuals em carrossel épico</div>
+        </div>
+        <div class="section-tags">
+          <span class="tag tag-gsap">GSAP Horizontal Scroll</span>
+          <span class="tag tag-image">KVs Gerados</span>
+          <span class="tag tag-css">Hover Overlay</span>
+        </div>
+      </div>
+      <div class="section-grid">
+        <div class="section-col">
+          <div class="col-label"><span class="col-icon">📐</span>Conteúdo</div>
+          <div class="col-item"><span class="bullet">✦</span><p>Os 7 KVs gerados pelo fal.ai em cards verticais 9:16</p></div>
+          <div class="col-item"><span class="bullet">✦</span><p>Ao hover: <strong>overlay escuro</strong> + headline do KV aparece sobre a imagem</p></div>
+          <div class="col-item"><span class="bullet">✦</span><p>Label embaixo de cada card: nome do tema (ex: "A Ressurreição")</p></div>
+          <div class="col-item"><span class="bullet">✦</span><p>Eyebrow da seção: <em>"As imagens da nossa fé"</em></p></div>
+        </div>
+        <div class="section-col">
+          <div class="col-label"><span class="col-icon">🎬</span>Efeito / Animação</div>
+          <div class="col-item"><span class="bullet">⚡</span><p><span class="code-tag">ScrollTrigger</span> com <span class="code-tag">pin + scrub</span>: scroll vertical do usuário move o carrossel <em>horizontalmente</em></p></div>
+          <div class="col-item"><span class="bullet">⚡</span><p>Entrada dos cards: <span class="code-tag">gsap.from</span> com <em>stagger + fadeIn + scale(0.95)</em></p></div>
+          <div class="col-item"><span class="bullet">⚡</span><p>Hover: <span class="code-tag">CSS transition</span> — overlay de gradiente preto sobe de baixo, headline aparece</p></div>
+          <div class="col-item"><span class="bullet">⚡</span><p>Cursor custom: substituir cursor por ✝ dourado enquanto estiver nessa seção</p></div>
+        </div>
+        <div class="section-col">
+          <div class="col-label"><span class="col-icon">📏</span>Notas Técnicas</div>
+          <div class="col-item"><span class="bullet">▶</span><p>Cada card: <strong>280px × 500px</strong>, gap 24px, border-radius 4px</p></div>
+          <div class="col-item"><span class="bullet">▶</span><p>Container total: <strong>7 cards + gaps = ~2100px</strong> de largura horizontal</p></div>
+          <div class="col-item"><span class="bullet">▶</span><p>Seção tem <strong>~500vh</strong> para cobrir o scroll horizontal completo</p></div>
+          <div class="col-item"><span class="bullet">▶</span><p>Referência: <a href="#" style="color: var(--gold)">awwwards.com</a> — "horizontal scroll GSAP"</p></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="flow-note">↓ scroll</div>
+
+  <!-- ============= SECTION 04 ============= -->
+  <div class="section-card">
+    <div class="section-number-col">
+      <div class="section-dot" style="border-color:#1A3A5C; background:#1A3A5C; color:#A8C8E8;">04</div>
+      <div class="section-num-label">PILARES</div>
+    </div>
+    <div class="section-body">
+      <div class="mockup-bar" style="background: linear-gradient(90deg, #0A0A14, #1A2A4A, #0A0A14)"></div>
+      <div class="section-top">
+        <div class="section-title-block">
+          <h2>OS PILARES — São Miguel · Jesus · Maria · A Igreja</h2>
+          <div class="section-subtitle">4 cards de identidade católica</div>
+        </div>
+        <div class="section-tags">
+          <span class="tag tag-gsap">GSAP Stagger</span>
+          <span class="tag tag-image">KVs + Ícones</span>
+          <span class="tag tag-css">Hover 3D Tilt</span>
+        </div>
+      </div>
+      <div class="section-grid">
+        <div class="section-col">
+          <div class="col-label"><span class="col-icon">📐</span>Conteúdo</div>
+          <div class="col-item"><span class="bullet">✦</span><p><strong>Card 1 — São Miguel:</strong> "Quis ut Deus? — Quem como Deus?" · guerreiro do céu</p></div>
+          <div class="col-item"><span class="bullet">✦</span><p><strong>Card 2 — Jesus Cristo:</strong> "A maior virada da história foi no terceiro dia." · ressurreição</p></div>
+          <div class="col-item"><span class="bullet">✦</span><p><strong>Card 3 — Nossa Senhora:</strong> "Ela nunca parou de rezar por você." · proteção maternal</p></div>
+          <div class="col-item"><span class="bullet">✦</span><p><strong>Card 4 — A Igreja:</strong> "2000 anos. Uma só fé." · legado e autoridade</p></div>
+        </div>
+        <div class="section-col">
+          <div class="col-label"><span class="col-icon">🎬</span>Efeito / Animação</div>
+          <div class="col-item"><span class="bullet">⚡</span><p>Cards entram com <span class="code-tag">gsap.from stagger 0.15s</span> + <span class="code-tag">y:60 opacity:0</span> ao entrar na viewport</p></div>
+          <div class="col-item"><span class="bullet">⚡</span><p>Hover: efeito <span class="code-tag">3D tilt</span> usando <span class="code-tag">VanillaTilt.js</span> — card inclina levemente (10°)</p></div>
+          <div class="col-item"><span class="bullet">⚡</span><p>Hover: borda do card acende em dourado com <span class="code-tag">box-shadow glow</span></p></div>
+          <div class="col-item"><span class="bullet">⚡</span><p>Ícone de cada pilar: símbolo específico (espada, cruz, estrela, chaves do Vaticano)</p></div>
+        </div>
+        <div class="section-col">
+          <div class="col-label"><span class="col-icon">📏</span>Notas Técnicas</div>
+          <div class="col-item"><span class="bullet">▶</span><p>Grid 2×2 no desktop, 1×4 no mobile</p></div>
+          <div class="col-item"><span class="bullet">▶</span><p>Cada card usa o KV correspondente como imagem de background (top 40% da card)</p></div>
+          <div class="col-item"><span class="bullet">▶</span><p>Parte inferior do card: fundo escuro com headline + frase curta</p></div>
+          <div class="col-item"><span class="bullet">▶</span><p>Lib: <span class="code-tag">vanilla-tilt.js</span> (3KB, zero dependência)</p></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="flow-note">↓ scroll</div>
+
+  <!-- ============= SECTION 05 ============= -->
+  <div class="section-card">
+    <div class="section-number-col">
+      <div class="section-dot" style="border-color:#1A3A5C; background:#1A3A5C; color:#A8C8E8;">05</div>
+      <div class="section-num-label">VERSÍCULO</div>
+    </div>
+    <div class="section-body">
+      <div class="mockup-bar" style="background: linear-gradient(90deg, #0A0A0A, #3A2A10, #0A0A0A)"></div>
+      <div class="section-top">
+        <div class="section-title-block">
+          <h2>VERSÍCULO EM DESTAQUE — Citação Bíblica Épica</h2>
+          <div class="section-subtitle">Frase bíblica como statement visual · fundo com vídeo de catedral</div>
+        </div>
+        <div class="section-tags">
+          <span class="tag tag-video">Vídeo BG</span>
+          <span class="tag tag-gsap">GSAP Reveal</span>
+          <span class="tag tag-css">Overlay</span>
+        </div>
+      </div>
+      <div class="section-grid">
+        <div class="section-col">
+          <div class="col-label"><span class="col-icon">📐</span>Conteúdo</div>
+          <div class="col-item"><span class="bullet">✦</span><p><strong>Frase principal:</strong> <em>"As portas do inferno não prevalecerão."</em></p></div>
+          <div class="col-item"><span class="bullet">✦</span><p><strong>Referência:</strong> Mateus 16,18 — pequena, abaixo</p></div>
+          <div class="col-item"><span class="bullet">✦</span><p>Elemento decorativo: linha dourada acima e abaixo do texto</p></div>
+          <div class="col-item"><span class="bullet">✦</span><p>Cruz Papal pequena como separador</p></div>
+        </div>
+        <div class="section-col">
+          <div class="col-label"><span class="col-icon">🎬</span>Efeito / Animação</div>
+          <div class="col-item"><span class="bullet">⚡</span><p>Fundo: vídeo de <em>catedral gótica ao amanhecer</em>, luz entrando pelos vitrais</p></div>
+          <div class="col-item"><span class="bullet">⚡</span><p>Overlay escuro <strong>60%</strong> para legibilidade</p></div>
+          <div class="col-item"><span class="bullet">⚡</span><p>Texto entra com <span class="code-tag">clipPath reveal</span> da esquerda para direita via GSAP</p></div>
+          <div class="col-item"><span class="bullet">⚡</span><p>As linhas douradas animam de <em>width: 0 → 100%</em> ao entrar na viewport</p></div>
+        </div>
+        <div class="section-col">
+          <div class="col-label"><span class="col-icon">🎥</span>Mídia Sugerida</div>
+          <div class="col-item"><span class="bullet">▶</span><p>Vídeo loop: <em>"gothic cathedral light rays"</em> no Pexels</p></div>
+          <div class="col-item"><span class="bullet">▶</span><p>Alternativa estática: foto de interior de catedral com vitral em dourado</p></div>
+          <div class="col-item"><span class="bullet">▶</span><p>Fonte: Cinzel, 56–72px desktop, 32px mobile, cor branca com <em>text-shadow</em> dourado sutil</p></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="flow-note">↓ scroll</div>
+
+  <!-- ============= SECTION 06 ============= -->
+  <div class="section-card">
+    <div class="section-number-col">
+      <div class="section-dot" style="border-color:#2D6A4F; background:#2D6A4F; color:#A8D8A8;">06</div>
+      <div class="section-num-label">CONTADOR</div>
+    </div>
+    <div class="section-body">
+      <div class="mockup-bar" style="background: linear-gradient(90deg, #0A0A0A, #1A1A1A, #0A0A0A)"></div>
+      <div class="section-top">
+        <div class="section-title-block">
+          <h2>NÚMEROS QUE IMPRESSIONAM — Contador Animado</h2>
+          <div class="section-subtitle">Fatos sobre a Igreja Católica que mostram escala e poder</div>
+        </div>
+        <div class="section-tags">
+          <span class="tag tag-gsap">GSAP CountUp</span>
+          <span class="tag tag-css">Grid Stats</span>
+        </div>
+      </div>
+      <div class="section-grid">
+        <div class="section-col">
+          <div class="col-label"><span class="col-icon">📐</span>Conteúdo</div>
+          <div class="col-item"><span class="bullet">✦</span><p><strong>1,4 Bilhão</strong> de católicos no mundo</p></div>
+          <div class="col-item"><span class="bullet">✦</span><p><strong>2000+</strong> anos de história ininterrupta</p></div>
+          <div class="col-item"><span class="bullet">✦</span><p><strong>266</strong> papas desde São Pedro</p></div>
+          <div class="col-item"><span class="bullet">✦</span><p><strong>10.000+</strong> santos canonizados</p></div>
+        </div>
+        <div class="section-col">
+          <div class="col-label"><span class="col-icon">🎬</span>Efeito / Animação</div>
+          <div class="col-item"><span class="bullet">⚡</span><p>Números sobem de 0 ao valor final via <span class="code-tag">gsap.to counter</span> quando entram na viewport</p></div>
+          <div class="col-item"><span class="bullet">⚡</span><p>Cada stat entra com <span class="code-tag">stagger fadeInUp</span> em sequência</p></div>
+          <div class="col-item"><span class="bullet">⚡</span><p>Número em dourado grande (Cinzel 72px), label em cinza pequeno abaixo</p></div>
+        </div>
+        <div class="section-col">
+          <div class="col-label"><span class="col-icon">📏</span>Notas Técnicas</div>
+          <div class="col-item"><span class="bullet">▶</span><p>Grid 4 colunas desktop, 2 mobile</p></div>
+          <div class="col-item"><span class="bullet">▶</span><p>Separador vertical <em>1px dourado opacity 20%</em> entre stats</p></div>
+          <div class="col-item"><span class="bullet">▶</span><p>Fundo: preto puro com textura de granito/pedra suavíssima (CSS background-image)</p></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="flow-note">↓ scroll</div>
+
+  <!-- ============= SECTION 07 ============= -->
+  <div class="section-card">
+    <div class="section-number-col">
+      <div class="section-dot" style="border-color:#5A2A5A; background:#5A2A5A; color:#D8A8D8;">07</div>
+      <div class="section-num-label">ORAÇÃO</div>
+    </div>
+    <div class="section-body">
+      <div class="mockup-bar" style="background: linear-gradient(90deg, #0A0A14, #2A1A2A, #0A0A14)"></div>
+      <div class="section-top">
+        <div class="section-title-block">
+          <h2>ORAÇÃO DO DIA — Conteúdo Vivo</h2>
+          <div class="section-subtitle">Uma oração curta · São Miguel ou Salve Rainha · rotativa</div>
+        </div>
+        <div class="section-tags">
+          <span class="tag tag-css">Fade Transition</span>
+          <span class="tag tag-image">KV de fundo</span>
+          <span class="tag tag-gsap">GSAP Timeline</span>
+        </div>
+      </div>
+      <div class="section-grid">
+        <div class="section-col">
+          <div class="col-label"><span class="col-icon">📐</span>Conteúdo</div>
+          <div class="col-item"><span class="bullet">✦</span><p><strong>Título:</strong> <em>"Reze com a gente"</em></p></div>
+          <div class="col-item"><span class="bullet">✦</span><p>Texto da oração (ex: Oração a São Miguel) centralizado</p></div>
+          <div class="col-item"><span class="bullet">✦</span><p>Botão <em>"Copiar oração"</em> — copia pro clipboard</p></div>
+          <div class="col-item"><span class="bullet">✦</span><p>Fundo: KV05 (Jerusalém) ou KV06 (Eucaristia) com overlay forte</p></div>
+        </div>
+        <div class="section-col">
+          <div class="col-label"><span class="col-icon">🎬</span>Efeito / Animação</div>
+          <div class="col-item"><span class="bullet">⚡</span><p>Fundo com <span class="code-tag">slow ken-burns</span>: imagem cresce muito lentamente (scale 1 → 1.08 em 20s loop)</p></div>
+          <div class="col-item"><span class="bullet">⚡</span><p>Texto da oração aparece linha por linha com <span class="code-tag">stagger fadeIn</span> ao entrar na seção</p></div>
+          <div class="col-item"><span class="bullet">⚡</span><p>Botão "Copiar": ao clicar, muda para <em>"✓ Copiada"</em> por 2s depois volta</p></div>
+        </div>
+        <div class="section-col">
+          <div class="col-label"><span class="col-icon">📏</span>Notas Técnicas</div>
+          <div class="col-item"><span class="bullet">▶</span><p>Orações sugeridas para rotação: Oração a São Miguel, Salve Rainha, Ângelus, Sub Tuum Praesidium</p></div>
+          <div class="col-item"><span class="bullet">▶</span><p>Pode ser estática na V1 e dinâmica (troca por dia) na V2</p></div>
+          <div class="col-item"><span class="bullet">▶</span><p>Fonte: Cinzel Regular, itálico, 18–22px, cor creme #F5F0E8</p></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="flow-note">↓ scroll</div>
+
+  <!-- ============= SECTION 08 ============= -->
+  <div class="section-card">
+    <div class="section-number-col">
+      <div class="section-dot" style="border-color:#7A1E1E; background:#7A1E1E; color:#E8A8A8;">08</div>
+      <div class="section-num-label">CTA</div>
+    </div>
+    <div class="section-body">
+      <div class="mockup-bar" style="background: linear-gradient(90deg, #1A0808, #7A1E1E80, #C9A84C80, #1A0808)"></div>
+      <div class="section-top">
+        <div class="section-title-block">
+          <h2>CTA FINAL — "Seja Católico. Agora."</h2>
+          <div class="section-subtitle">Fechamento épico · chamada à ação · entrada na comunidade</div>
+        </div>
+        <div class="section-tags">
+          <span class="tag tag-gsap">GSAP Explosion</span>
+          <span class="tag tag-video">Vídeo BG</span>
+          <span class="tag tag-form">Formulário</span>
+        </div>
+      </div>
+      <div class="section-grid">
+        <div class="section-col">
+          <div class="col-label"><span class="col-icon">📐</span>Conteúdo</div>
+          <div class="col-item"><span class="bullet">✦</span><p><strong>Headline:</strong> <em>"Seja Católico. Agora."</em> — enorme, centralizada</p></div>
+          <div class="col-item"><span class="bullet">✦</span><p><strong>Subline:</strong> <em>"Receba conteúdo, orações e inspiração."</em></p></div>
+          <div class="col-item"><span class="bullet">✦</span><p><strong>Campo de e-mail</strong> + botão "Entrar" ou "Me inscrever"</p></div>
+          <div class="col-item"><span class="bullet">✦</span><p>Links para redes sociais (Instagram, TikTok) com ícones</p></div>
+          <div class="col-item"><span class="bullet">✦</span><p>Rodapé: logo + <em>"Católico, Apostólico, Romano."</em></p></div>
+        </div>
+        <div class="section-col">
+          <div class="col-label"><span class="col-icon">🎬</span>Efeito / Animação</div>
+          <div class="col-item"><span class="bullet">⚡</span><p>Ao entrar na seção: <em>explosão de luz dourada</em> do centro — <span class="code-tag">radial-gradient</span> animado expandindo</p></div>
+          <div class="col-item"><span class="bullet">⚡</span><p>Headline: <span class="code-tag">SplitText</span> com letras caindo de cima para baixo <em>(stagger + bounceIn)</em></p></div>
+          <div class="col-item"><span class="bullet">⚡</span><p>Campo de email: borda que acende em dourado ao focar</p></div>
+          <div class="col-item"><span class="bullet">⚡</span><p>Botão: efeito <span class="code-tag">shimmer</span> dourado passando da esquerda pra direita ao hover</p></div>
+        </div>
+        <div class="section-col">
+          <div class="col-label"><span class="col-icon">📏</span>Notas Técnicas</div>
+          <div class="col-item"><span class="bullet">▶</span><p>Formulário pode conectar ao <strong>Mailchimp, Brevo ou ConvertKit</strong> (todos têm plano grátis)</p></div>
+          <div class="col-item"><span class="bullet">▶</span><p>Vídeo BG sugerido: <em>"sunrise over jerusalem"</em> ou KV07 em slow-motion</p></div>
+          <div class="col-item"><span class="bullet">▶</span><p>Botão: fundo dourado sólido, texto preto, Cinzel Bold — muito mais impacto que outline</p></div>
+          <div class="col-item"><span class="bullet">▶</span><p>Cross dissolve suave de 60px entre essa seção e o footer</p></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- VIDEO REFERENCES -->
+<div class="video-section">
+  <div class="inner">
+    <div style="font-size: 10px; letter-spacing: 5px; color: var(--gold); margin-bottom: 16px; text-transform: uppercase;">Referências de Vídeo</div>
+    <div style="font-family: 'Cinzel', serif; font-size: 22px; margin-bottom: 4px;">Onde buscar os vídeos de fundo</div>
+    <p style="font-size: 13px; color: #555; margin-bottom: 0;">Todos gratuitos para uso</p>
+    <div class="video-grid">
+      <div class="video-card">
+        <div class="vc-label">Hero · Seção 1</div>
+        <h4>Catedral com Velas</h4>
+        <p>Pexels.com → buscar <em>"cathedral candles"</em> ou <em>"gothic church interior loop"</em>. Filtrar por licença livre.</p>
+      </div>
+      <div class="video-card">
+        <div class="vc-label">Versículo · Seção 5</div>
+        <h4>Luz entrando em catedral</h4>
+        <p>Pexels.com → <em>"cathedral light rays"</em> ou <em>"church window sunlight loop"</em>.</p>
+      </div>
+      <div class="video-card">
+        <div class="vc-label">CTA · Seção 8</div>
+        <h4>Amanhecer / Céu dourado</h4>
+        <p>Pixabay.com → <em>"golden sunrise loop"</em> ou <em>"heavenly sky clouds slow motion"</em>.</p>
+      </div>
+      <div class="video-card">
+        <div class="vc-label">Alternativa para todos</div>
+        <h4>Incenso / Fumaça Sacra</h4>
+        <p>Mixkit.co → gratuito, alta qualidade. <em>"smoke incense"</em> funciona em qualquer seção como overlay blend.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SUMMARY TABLE -->
+<div class="summary-section" style="padding-top: 60px;">
+  <div style="font-size: 10px; letter-spacing: 5px; color: var(--gold); margin-bottom: 16px; text-transform: uppercase;">Resumo Técnico</div>
+  <h2>Bibliotecas Necessárias</h2>
+  <table>
+    <thead>
+      <tr>
+        <th>Biblioteca</th>
+        <th>Uso no Site</th>
+        <th>Tamanho</th>
+        <th>Prioridade</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>GSAP + ScrollTrigger</td>
+        <td>Manifesto scrub, KVs horizontal scroll, reveals, counters, hero</td>
+        <td><span class="lib">~60KB</span></td>
+        <td><span class="priority-high">ESSENCIAL</span></td>
+      </tr>
+      <tr>
+        <td>GSAP SplitText</td>
+        <td>Título Hero letra-a-letra, Manifesto palavra-a-palavra, CTA</td>
+        <td><span class="lib">incluso GSAP</span></td>
+        <td><span class="priority-high">ESSENCIAL</span></td>
+      </tr>
+      <tr>
+        <td>Vanilla Tilt</td>
+        <td>Efeito 3D tilt nos cards dos Pilares (Seção 4)</td>
+        <td><span class="lib">3KB</span></td>
+        <td><span class="priority-med">RECOMENDADO</span></td>
+      </tr>
+      <tr>
+        <td>Google Fonts — Cinzel</td>
+        <td>Toda a tipografia de headline</td>
+        <td><span class="lib">via CDN</span></td>
+        <td><span class="priority-high">ESSENCIAL</span></td>
+      </tr>
+      <tr>
+        <td>Particles.js / tsParticles</td>
+        <td>Partículas douradas na seção Manifesto</td>
+        <td><span class="lib">~28KB</span></td>
+        <td><span class="priority-low">OPCIONAL V2</span></td>
+      </tr>
+      <tr>
+        <td>Mailchimp / Brevo embed</td>
+        <td>Formulário de captura de e-mail no CTA final</td>
+        <td><span class="lib">script externo</span></td>
+        <td><span class="priority-med">RECOMENDADO</span></td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<div class="footer">
+  <p style="font-family: 'Cinzel', serif; font-size: 16px; color: var(--gold); letter-spacing: 4px; margin-bottom: 8px;">BE CATHOLIC</p>
+  <p>Arquitetura do Site · 8 Seções · Landing Page Épica</p>
+</div>
+
+</body>
+</html>
