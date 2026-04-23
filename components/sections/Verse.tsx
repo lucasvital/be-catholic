@@ -30,6 +30,14 @@ export default function Verse() {
 
     video.pause();
 
+    let lastSetTime = -1;
+    const minDelta = 1 / 24;
+    let videoReady = false;
+    const onReady = () => { videoReady = true; };
+    video.addEventListener('loadedmetadata', onReady);
+    video.addEventListener('canplay', onReady);
+    if (video.readyState >= 1) videoReady = true;
+
     // Scrub video with scroll — pin the section for the duration
     ScrollTrigger.create({
       trigger: wrapper,
@@ -37,11 +45,14 @@ export default function Verse() {
       pinSpacing: true,
       start: 'top top',
       end: '+=200%',
-      scrub: 0.8,
+      scrub: 1.2,
       invalidateOnRefresh: true,
       onUpdate: (self) => {
-        if (video.duration) {
-          video.currentTime = self.progress * video.duration;
+        if (!videoReady || !video.duration) return;
+        const target = self.progress * video.duration;
+        if (Math.abs(target - lastSetTime) >= minDelta) {
+          video.currentTime = target;
+          lastSetTime = target;
         }
       },
     });
@@ -82,6 +93,8 @@ export default function Verse() {
           muted
           playsInline
           preload="auto"
+          disablePictureInPicture
+          disableRemotePlayback
           style={{
             position: 'absolute',
             top: 0,

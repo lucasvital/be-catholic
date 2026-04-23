@@ -54,20 +54,32 @@ export default function Prayer() {
 
       video.pause();
 
+      let lastSetTime = -1;
+      const minDelta = 1 / 24;
+      let videoReady = false;
+      const onReady = () => { videoReady = true; };
+      video.addEventListener('loadedmetadata', onReady);
+      video.addEventListener('canplay', onReady);
+      if (video.readyState >= 1) videoReady = true;
+
       ScrollTrigger.create({
         trigger: wrapper,
         pin: stickyRef.current,
         pinSpacing: true,
         start: 'top top',
         end: '+=350%',
-        scrub: 0.6,
+        scrub: 1.2,
         invalidateOnRefresh: true,
         onUpdate: (self) => {
           const p = self.progress;
 
-          // Effect 1 — video scrubs with scroll
-          if (video.duration) {
-            video.currentTime = p * video.duration;
+          // Effect 1 — video scrubs with scroll (throttled)
+          if (videoReady && video.duration) {
+            const target = p * video.duration;
+            if (Math.abs(target - lastSetTime) >= minDelta) {
+              video.currentTime = target;
+              lastSetTime = target;
+            }
           }
 
           // Subtle parallax on video container
@@ -149,6 +161,8 @@ export default function Prayer() {
             muted
             playsInline
             preload="auto"
+            disablePictureInPicture
+            disableRemotePlayback
             style={{
               position: 'absolute',
               top: 0,

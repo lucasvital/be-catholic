@@ -63,6 +63,15 @@ export default function Hero() {
       });
     }
 
+    // Throttle state — avoid redundant seeks
+    let lastSetTime = -1;
+    const minDelta = 1 / 24; // ~24fps source
+    let videoReady = false;
+    const onReady = () => { videoReady = true; };
+    video.addEventListener('loadedmetadata', onReady);
+    video.addEventListener('canplay', onReady);
+    if (video.readyState >= 1) videoReady = true;
+
     // Scroll scrub — pin the sticky div and drive video currentTime
     ScrollTrigger.create({
       trigger: wrapper,
@@ -70,11 +79,16 @@ export default function Hero() {
       pinSpacing: true,
       start: 'top top',
       end: '+=350%',
-      scrub: 0.6,
+      scrub: 1.2,
       invalidateOnRefresh: true,
       onUpdate: (self) => {
-        if (!video.duration) return;
-        video.currentTime = self.progress * video.duration;
+        if (videoReady && video.duration) {
+          const target = self.progress * video.duration;
+          if (Math.abs(target - lastSetTime) >= minDelta) {
+            video.currentTime = target;
+            lastSetTime = target;
+          }
+        }
 
         // Overlay darkens toward the end for transition
         if (overlayRef.current) {
@@ -117,6 +131,8 @@ export default function Hero() {
           muted
           playsInline
           preload="auto"
+          disablePictureInPicture
+          disableRemotePlayback
           style={{
             position: 'absolute',
             top: 0,
